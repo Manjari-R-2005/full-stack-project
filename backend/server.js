@@ -6,6 +6,8 @@ const dotenv = require('dotenv');
 // Import routes
 const eventRoutes = require('./routes/events');
 const authRoutes = require('./routes/auth');
+const bookingRoutes = require('./routes/bookings');
+const userRoutes = require('./routes/users');
 
 dotenv.config();
 
@@ -20,6 +22,8 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use('/api/events', eventRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/bookings', bookingRoutes);
+app.use('/api/users', userRoutes);
 
 // Default route
 app.get('/', (req, res) => {

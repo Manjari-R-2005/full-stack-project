@@ -24,15 +24,16 @@ const Navbar = () => {
               <Link to="/" className="text-white hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Home
               </Link>
-              <Link to="/events" className="text-gray-300 hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                Events
-              </Link>
-              <Link to="/artists" className="text-gray-300 hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                Artists
-              </Link>
-              <Link to="/about" className="text-gray-300 hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                About
-              </Link>
+              {isAuthenticated && (
+                <Link to="/dashboard" className="text-gray-300 hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                  Dashboard
+                </Link>
+              )}
+              {isAuthenticated && user?.role === 'admin' && (
+                <Link to="/admin" className="text-gray-300 hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                  Admin Panel
+                </Link>
+              )}
               
               {isAuthenticated ? (
                 <div className="relative">

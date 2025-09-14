@@ -1,31 +1,5 @@
 const mongoose = require('mongoose');
 
-const ticketTypeSchema = new mongoose.Schema({
-  type: {
-    type: String,
-    required: true,
-    enum: ['Regular', 'VIP', 'Backstage Pass']
-  },
-  price: {
-    type: Number,
-    required: true
-  },
-  totalTickets: {
-    type: Number,
-    required: true
-  },
-  soldTickets: {
-    type: Number,
-    default: 0
-  },
-  remainingTickets: {
-    type: Number,
-    default: function() {
-      return this.totalTickets - this.soldTickets;
-    }
-  }
-});
-
 const eventSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -36,19 +10,8 @@ const eventSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  artist: {
-    type: String,
-    required: true
-  },
-  lineup: [{
-    type: String
-  }],
   date: {
     type: Date,
-    required: true
-  },
-  time: {
-    type: String,
     required: true
   },
   venue: {
@@ -60,32 +23,57 @@ const eventSchema = new mongoose.Schema({
       type: String,
       required: true
     },
-    city: {
-      type: String,
-      required: true
-    },
     capacity: {
       type: Number,
       required: true
     }
   },
+  artists: [{
+    name: {
+      type: String,
+      required: true
+    },
+    genre: String,
+    image: String
+  }],
+  ticketTypes: [{
+    type: {
+      type: String,
+      required: true,
+      enum: ['Regular', 'VIP', 'Backstage Pass']
+    },
+    price: {
+      type: Number,
+      required: true
+    },
+    available: {
+      type: Number,
+      required: true
+    },
+    total: {
+      type: Number,
+      required: true
+    },
+    features: [String]
+  }],
   poster: {
     type: String,
-    required: true
+    default: ''
   },
-  ticketTypes: [ticketTypeSchema],
-  featured: {
-    type: Boolean,
-    default: false
-  },
+  images: [String],
   status: {
     type: String,
     enum: ['upcoming', 'ongoing', 'completed', 'cancelled'],
     default: 'upcoming'
   },
-  genre: {
+  featured: {
+    type: Boolean,
+    default: false
+  },
+  category: {
     type: String,
-    required: true
+    enum: ['Concert', 'Festival', 'Live Show', 'DJ Night'],
+    default: 'Concert'
   },
   duration: {
     type: String,
@@ -95,19 +83,14 @@ const eventSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Virtual for remaining tickets across all types
-eventSchema.virtual('totalRemainingTickets').get(function() {
-  return this.ticketTypes.reduce((total, ticket) => {
-    return total + (ticket.totalTickets - ticket.soldTickets);
-  }, 0);
+// Virtual for total available tickets
+eventSchema.virtual('totalAvailableTickets').get(function() {
+  return this.ticketTypes.reduce((total, ticket) => total + ticket.available, 0);
 });
 
-// Update remaining tickets before saving
-eventSchema.pre('save', function(next) {
-  this.ticketTypes.forEach(ticket => {
-    ticket.remainingTickets = ticket.totalTickets - ticket.soldTickets;
-  });
-  next();
+// Virtual for total revenue potential
+eventSchema.virtual('totalRevenuePotential').get(function() {
+  return this.ticketTypes.reduce((total, ticket) => total + (ticket.price * ticket.total), 0);
 });
 
 module.exports = mongoose.model('Event', eventSchema);

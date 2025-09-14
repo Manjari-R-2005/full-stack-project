@@ -5,60 +5,63 @@ const { auth } = require('../middleware/auth');
 
 const router = express.Router();
 
-// Generate JWT Token
-const generateToken = (userId) => {
-  return jwt.sign({ userId }, process.env.JWT_SECRET || 'your-secret-key', {
-    expiresIn: '7d'
-  });
-};
-
-// @route   POST /api/auth/signup
-// @desc    Register a new user
-// @access  Public
-router.post('/signup', async (req, res) => {
+// Register
+router.post('/register', async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, phone, role } = req.body;
 
-    // Check if user already exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ message: 'User already exists with this email' });
+    // Validate input
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: 'Please provide all required fields' });
     }
 
-    // Create new user
-    const user = new User({
-      name,
-      email,
-      password
-    });
+    // Check if user exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
 
+    // Create user
+    const user = new User({ 
+      name, 
+      email, 
+      password, 
+      phone,
+      role: role || 'user'
+    });
     await user.save();
 
+    // Generate token
+    const token = jwt.sign(
+      { userId: user._id },
+      process.env.JWT_SECRET || 'your-secret-key',
+      { expiresIn: '7d' }
+    );
+
     res.status(201).json({
-      message: 'User created successfully. Please login to continue.',
+      token,
       user: {
         id: user._id,
         name: user.name,
         email: user.email,
+        phone: user.phone,
         role: user.role
       }
     });
   } catch (error) {
-    console.error('Signup error:', error);
-    if (error.name === 'ValidationError') {
-      const errors = Object.values(error.errors).map(err => err.message);
-      return res.status(400).json({ message: errors.join(', ') });
-    }
-    res.status(500).json({ message: 'Server error during signup' });
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
 
-// @route   POST /api/auth/login
-// @desc    Login user
-// @access  Public
+// Login
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
+
+    // Validate input
+    if (!email || !password) {
+      return res.status(400).json({ message: 'Please provide email and password' });
+    }
 
     // Check if user exists
     const user = await User.findOne({ email });
@@ -73,84 +76,46 @@ router.post('/login', async (req, res) => {
     }
 
     // Generate token
-    const token = generateToken(user._id);
+    const token = jwt.sign(
+      { userId: user._id },
+      process.env.JWT_SECRET || 'your-secret-key',
+      { expiresIn: '7d' }
+    );
 
     res.json({
-      message: 'Login successful',
       token,
       user: {
         id: user._id,
         name: user.name,
         email: user.email,
+        phone: user.phone,
         role: user.role
       }
     });
   } catch (error) {
-    console.error('Login error:', error);
-    res.status(500).json({ message: 'Server error during login' });
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
 
-// @route   GET /api/auth/me
-// @desc    Get current user
-// @access  Private
+// Get current user
 router.get('/me', auth, async (req, res) => {
-  try {
-    res.json({
-      user: {
-        id: req.user._id,
-        name: req.user.name,
-        email: req.user.email,
-        role: req.user.role,
-        bookings: req.user.bookings
-      }
-    });
-  } catch (error) {
-    console.error('Get user error:', error);
-    res.status(500).json({ message: 'Server error' });
-  }
+  res.json(req.user);
 });
 
-// @route   PUT /api/auth/profile
-// @desc    Update user profile
-// @access  Private
+// Update user profile
 router.put('/profile', auth, async (req, res) => {
   try {
-    const { name, email } = req.body;
-    const user = req.user;
-
+    const { name, phone } = req.body;
+    const user = await User.findById(req.user._id);
+    
     if (name) user.name = name;
-    if (email && email !== user.email) {
-      // Check if email is already taken
-      const existingUser = await User.findOne({ email });
-      if (existingUser) {
-        return res.status(400).json({ message: 'Email already in use' });
-      }
-      user.email = email;
-    }
-
+    if (phone) user.phone = phone;
+    
     await user.save();
-
-    res.json({
-      message: 'Profile updated successfully',
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role
-      }
-    });
+    res.json(user);
   } catch (error) {
-    console.error('Profile update error:', error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
-});
-
-// @route   POST /api/auth/logout
-// @desc    Logout user (client-side token removal)
-// @access  Private
-router.post('/logout', auth, (req, res) => {
-  res.json({ message: 'Logged out successfully' });
 });
 
 module.exports = router;

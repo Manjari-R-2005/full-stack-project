@@ -30,7 +30,7 @@ const EventDetails = () => {
 
   const fetchEvent = async () => {
     try {
-      const response = await axios.get(`/api/events/${id}`);
+      const response = await axios.get(`http://localhost:5000/api/events/${id}`);
       setEvent(response.data);
       setSelectedTicketType(response.data.ticketTypes[0]?.type || '');
       setLoading(false);
@@ -40,25 +40,11 @@ const EventDetails = () => {
     }
   };
 
-  const handleBooking = async () => {
+  const handleBooking = () => {
     if (!selectedTicketType || quantity < 1) return;
-
-    try {
-      setBookingStatus('loading');
-      const response = await axios.patch(`/api/events/${id}/book-tickets`, {
-        ticketType: selectedTicketType,
-        quantity: parseInt(quantity)
-      });
-      
-      setBookingStatus('success');
-      // Refresh event data to show updated ticket counts
-      fetchEvent();
-      
-      setTimeout(() => setBookingStatus(''), 3000);
-    } catch (error) {
-      setBookingStatus('error');
-      setTimeout(() => setBookingStatus(''), 3000);
-    }
+    
+    // Redirect to booking page with event and ticket details
+    window.location.href = `/booking/${id}?ticketType=${selectedTicketType}&quantity=${quantity}`;
   };
 
   const getSelectedTicketInfo = () => {
