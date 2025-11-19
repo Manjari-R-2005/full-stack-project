@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+<<<<<<< HEAD
 import { Calendar, MapPin, Users, Star, ArrowRight, Instagram, Youtube } from 'lucide-react';
+=======
+import { Calendar, MapPin, Users, Star, ArrowRight } from 'lucide-react';
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import axios from 'axios';
@@ -9,13 +13,17 @@ const Homepage = () => {
   const [events, setEvents] = useState([]);
   const [featuredEvents, setFeaturedEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+<<<<<<< HEAD
   const [galleryIndex, setGalleryIndex] = useState(0);
+=======
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
 
   useEffect(() => {
     fetchEvents();
     fetchFeaturedEvents();
   }, []);
 
+<<<<<<< HEAD
   const isNew = (e) => {
     try {
       const created = e?.createdAt ? new Date(e.createdAt).getTime() : (e?.date ? new Date(e.date).getTime() : 0);
@@ -30,11 +38,18 @@ const Homepage = () => {
     try {
       const response = await axios.get('/api/events');
       setEvents(response.data);
+=======
+  const fetchEvents = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/events');
+      setEvents(response.data.events || response.data);
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
     } catch (error) {
       console.error('Error fetching events:', error);
     }
   };
 
+<<<<<<< HEAD
   const featuredArtists = [
     {
       id: 1,
@@ -65,6 +80,11 @@ const Homepage = () => {
   const fetchFeaturedEvents = async () => {
     try {
       const response = await axios.get('/api/events/featured');
+=======
+  const fetchFeaturedEvents = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/events/featured/list');
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
       setFeaturedEvents(response.data);
       setLoading(false);
     } catch (error) {
@@ -106,6 +126,7 @@ const Homepage = () => {
     <div className="pt-16">
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
+<<<<<<< HEAD
         {/* Background video with image fallback */}
         <div className="absolute inset-0">
           <video
@@ -121,12 +142,18 @@ const Homepage = () => {
           <div className="absolute inset-0 bg-black/50" />
         </div>
 
+=======
+        <div className="absolute inset-0 bg-gradient-to-br from-dark-900 via-dark-800 to-primary-900/20"></div>
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1920&h=1080&fit=crop')] bg-cover bg-center opacity-20"></div>
+        
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
         <motion.div 
           className="relative z-10 text-center max-w-4xl mx-auto px-4"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
+<<<<<<< HEAD
           <h1 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
             <span className="text-white">Feel the Beat.</span>
             <br />
@@ -153,11 +180,31 @@ const Homepage = () => {
           </div>
         </motion.div>
 
+=======
+          <h1 className="text-6xl md:text-8xl font-bold mb-6">
+            <span className="gradient-text">Live Music</span>
+            <br />
+            <span className="text-white">Experiences</span>
+          </h1>
+          <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto">
+            Discover amazing concerts, festivals, and live performances. Book your tickets to unforgettable musical experiences.
+          </p>
+          <motion.button
+            className="btn-primary text-lg px-8 py-4"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Explore Events
+          </motion.button>
+        </motion.div>
+        
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
         <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
           <ArrowRight className="h-6 w-6 text-primary-400 rotate-90" />
         </div>
       </section>
 
+<<<<<<< HEAD
       {/* Upcoming Concerts - Horizontal Scroll */}
       <section className="py-16 px-4 bg-dark-800/40">
         <div className="max-w-7xl mx-auto">
@@ -207,6 +254,8 @@ const Homepage = () => {
         </div>
       </section>
 
+=======
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
       {/* Featured Events */}
       <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
@@ -293,16 +342,25 @@ const Homepage = () => {
         </div>
       </section>
 
+<<<<<<< HEAD
       {/* Featured Artists */}
       <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <motion.div
             className="text-center mb-12"
+=======
+      {/* All Events */}
+      <section className="py-20 px-4 bg-dark-800/50">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            className="text-center mb-16"
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
+<<<<<<< HEAD
             <h2 className="text-4xl md:text-5xl font-bold">
               Featured <span className="gradient-text">Artists</span>
             </h2>
@@ -311,11 +369,24 @@ const Homepage = () => {
 
           <motion.div
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
+=======
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              Upcoming <span className="gradient-text">Events</span>
+            </h2>
+            <p className="text-gray-400 text-lg">
+              Discover more amazing concerts and live performances
+            </p>
+          </motion.div>
+
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
           >
+<<<<<<< HEAD
             {featuredArtists.map((artist) => (
               <motion.div key={artist.id} variants={itemVariants} className="group card overflow-hidden p-0">
                 <div className="relative">
@@ -329,6 +400,57 @@ const Homepage = () => {
                 <div className="p-4 flex items-center justify-end gap-3">
                   <a href="#" className="text-gray-400 hover:text-pink-500"><Instagram className="h-5 w-5" /></a>
                   <a href="#" className="text-gray-400 hover:text-red-500"><Youtube className="h-5 w-5" /></a>
+=======
+            {events.filter(event => !event.featured).map((event) => (
+              <motion.div
+                key={event._id}
+                variants={itemVariants}
+                className="card overflow-hidden group hover:scale-105 transition-transform duration-300"
+              >
+                <div className="relative">
+                  <img
+                    src={event.poster}
+                    alt={event.title}
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <span className="bg-primary-500/90 text-white px-2 py-1 rounded text-xs font-semibold">
+                      {event.genre}
+                    </span>
+                  </div>
+                </div>
+                
+                <div className="p-6">
+                  <div className="flex items-center text-primary-400 text-sm mb-2">
+                    <Calendar className="h-4 w-4 mr-2" />
+                    {format(new Date(event.date), 'MMM dd')} • {event.time}
+                  </div>
+                  
+                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-primary-400 transition-colors">
+                    {event.title}
+                  </h3>
+                  
+                  <p className="text-primary-400 font-semibold mb-2">{event.artist}</p>
+                  
+                  <div className="flex items-center text-gray-400 text-sm mb-4">
+                    <MapPin className="h-4 w-4 mr-2" />
+                    {event.venue.city}
+                  </div>
+                  
+                  <div className="flex items-center justify-between">
+                    <span className="text-lg font-bold text-white">
+                      From ${Math.min(...event.ticketTypes.map(t => t.price))}
+                    </span>
+                    
+                    <Link
+                      to={`/event/${event._id}`}
+                      className="btn-secondary text-sm px-4 py-2"
+                    >
+                      View Details
+                    </Link>
+                  </div>
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
                 </div>
               </motion.div>
             ))}
@@ -336,6 +458,7 @@ const Homepage = () => {
         </div>
       </section>
 
+<<<<<<< HEAD
       {/* Gallery Preview - Small Carousel */}
       <section className="py-16 px-4 bg-dark-800/50">
         <div className="max-w-7xl mx-auto">
@@ -374,6 +497,8 @@ const Homepage = () => {
         </div>
       </section>
 
+=======
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
       {/* CTA Section */}
       <section className="py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">

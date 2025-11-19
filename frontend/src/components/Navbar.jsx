@@ -7,7 +7,10 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const { user, logout, isAuthenticated } = useAuth();
+<<<<<<< HEAD
   const isAdmin = (user?.email || '').toLowerCase() === 'manjari.raveendran@gmail.com';
+=======
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
 
   return (
     <nav className="fixed top-0 w-full z-50 glass-effect">
@@ -25,6 +28,7 @@ const Navbar = () => {
               <Link to="/" className="text-white hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Home
               </Link>
+<<<<<<< HEAD
               <Link to="/events" className="text-gray-300 hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Events
               </Link>
@@ -34,6 +38,18 @@ const Navbar = () => {
               <Link to="/about" className="text-gray-300 hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 About
               </Link>
+=======
+              {isAuthenticated && (
+                <Link to="/dashboard" className="text-gray-300 hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                  Dashboard
+                </Link>
+              )}
+              {isAuthenticated && user?.role === 'admin' && (
+                <Link to="/admin" className="text-gray-300 hover:text-primary-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                  Admin Panel
+                </Link>
+              )}
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
               
               {isAuthenticated ? (
                 <div className="relative">
@@ -46,6 +62,7 @@ const Navbar = () => {
                   </button>
                   
                   {showUserMenu && (
+<<<<<<< HEAD
                     <div className="absolute right-0 mt-2 w-56 bg-dark-800 rounded-md shadow-lg py-1 z-50">
                       <div className="px-4 py-2 text-sm text-gray-300 border-b border-gray-700">
                         <div className="font-medium truncate" title={user?.name}>{user?.name}</div>
@@ -67,6 +84,13 @@ const Navbar = () => {
                           Admin Dashboard
                         </Link>
                       )}
+=======
+                    <div className="absolute right-0 mt-2 w-48 bg-dark-800 rounded-md shadow-lg py-1 z-50">
+                      <div className="px-4 py-2 text-sm text-gray-300 border-b border-gray-700">
+                        <div className="font-medium">{user?.name}</div>
+                        <div className="text-gray-400">{user?.email}</div>
+                      </div>
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
                       <button
                         onClick={() => {
                           logout();
@@ -129,6 +153,7 @@ const Navbar = () => {
             {isAuthenticated ? (
               <div className="border-t border-gray-700 pt-3 mt-3">
                 <div className="px-3 py-2 text-sm text-gray-300">
+<<<<<<< HEAD
                   <div className="font-medium truncate" title={user?.name}>{user?.name}</div>
                   <div className="text-gray-400 break-all" title={user?.email}>{user?.email}</div>
                 </div>
@@ -148,6 +173,11 @@ const Navbar = () => {
                     Admin Dashboard
                   </Link>
                 )}
+=======
+                  <div className="font-medium">{user?.name}</div>
+                  <div className="text-gray-400">{user?.email}</div>
+                </div>
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
                 <button
                   onClick={() => {
                     logout();

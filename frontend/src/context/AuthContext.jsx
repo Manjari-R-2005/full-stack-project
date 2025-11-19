@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 
+<<<<<<< HEAD
 // Initialize axios defaults synchronously
 axios.defaults.baseURL = 'http://localhost:5000';
 const initialToken = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
@@ -8,6 +9,8 @@ if (initialToken) {
   axios.defaults.headers.common['Authorization'] = `Bearer ${initialToken}`;
 }
 
+=======
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
 const AuthContext = createContext();
 
 export const useAuth = () => {
@@ -21,6 +24,7 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+<<<<<<< HEAD
   const [token, setToken] = useState(initialToken);
 
   // Set up axios defaults
@@ -29,6 +33,12 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
+=======
+  const [token, setToken] = useState(localStorage.getItem('token'));
+
+  // Set up axios defaults
+  useEffect(() => {
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     } else {
@@ -36,6 +46,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, [token]);
 
+<<<<<<< HEAD
   // Ensure Authorization header is always attached using latest token
   useEffect(() => {
     const reqId = axios.interceptors.request.use((config) => {
@@ -51,6 +62,8 @@ export const AuthProvider = ({ children }) => {
     };
   }, [token]);
 
+=======
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
   // Check if user is logged in on app start
   useEffect(() => {
     const checkAuth = async () => {
@@ -66,6 +79,7 @@ export const AuthProvider = ({ children }) => {
       }
       setLoading(false);
     };
+<<<<<<< HEAD
     checkAuth();
   }, [token]);
 
@@ -113,6 +127,12 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+=======
+
+    checkAuth();
+  }, [token]);
+
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
   const signup = async (userData) => {
     try {
       const response = await axios.post('http://localhost:5000/api/auth/signup', userData);
@@ -159,6 +179,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+<<<<<<< HEAD
   const changePassword = async ({ currentPassword, newPassword }) => {
     try {
       const res = await axios.put('http://localhost:5000/api/auth/password', { currentPassword, newPassword });
@@ -179,11 +200,14 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+=======
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
   const value = {
     user,
     loading,
     signup,
     login,
+<<<<<<< HEAD
     forgotPassword,
     verifyOtp,
     resetPassword,
@@ -192,6 +216,10 @@ export const AuthProvider = ({ children }) => {
     updateProfile,
     changePassword,
     getBookings,
+=======
+    logout,
+    updateProfile,
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
     isAuthenticated: !!user
   };
 

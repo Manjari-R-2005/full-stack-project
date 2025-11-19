@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const path = require('path');
 const dotenv = require('dotenv');
 // Load env FIRST
@@ -12,6 +13,20 @@ const { verifyTransporter } = require('./services/email');
 const eventRoutes = require('./routes/events');
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
+=======
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const dotenv = require('dotenv');
+
+// Import routes
+const eventRoutes = require('./routes/events');
+const authRoutes = require('./routes/auth');
+const bookingRoutes = require('./routes/bookings');
+const userRoutes = require('./routes/users');
+
+dotenv.config();
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -24,7 +39,12 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use('/api/events', eventRoutes);
 app.use('/api/auth', authRoutes);
+<<<<<<< HEAD
 app.use('/api/admin', adminRoutes);
+=======
+app.use('/api/bookings', bookingRoutes);
+app.use('/api/users', userRoutes);
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
 
 // Default route
 app.get('/', (req, res) => {
@@ -32,6 +52,7 @@ app.get('/', (req, res) => {
 });
 
 // MongoDB connection
+<<<<<<< HEAD
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/concert-events';
 
 // Verify SMTP transporter once on startup (non-blocking)
@@ -60,5 +81,19 @@ async function connectWithRetry(retries = 30, delayMs = 2000) {
 }
 
 connectWithRetry();
+=======
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/concert-events';
+
+mongoose.connect(MONGODB_URI)
+  .then(() => {
+    console.log('Connected to MongoDB');
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.error('MongoDB connection error:', error);
+  });
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
 
 module.exports = app;

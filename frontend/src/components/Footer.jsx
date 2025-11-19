@@ -1,5 +1,9 @@
 import React from 'react';
+<<<<<<< HEAD
 import { Music, Facebook, Instagram, Youtube } from 'lucide-react';
+=======
+import { Music, Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -18,6 +22,7 @@ const Footer = () => {
               concerts, and festivals around the world.
             </p>
             <div className="flex space-x-4">
+<<<<<<< HEAD
               <a href="https://instagram.com/concerthub" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-primary-400 transition-colors">
                 <Instagram className="h-6 w-6" />
               </a>
@@ -25,6 +30,18 @@ const Footer = () => {
                 <Facebook className="h-6 w-6" />
               </a>
               <a href="https://youtube.com/@concerthub" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-primary-400 transition-colors">
+=======
+              <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors">
+                <Facebook className="h-6 w-6" />
+              </a>
+              <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors">
+                <Twitter className="h-6 w-6" />
+              </a>
+              <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors">
+                <Instagram className="h-6 w-6" />
+              </a>
+              <a href="#" className="text-gray-400 hover:text-primary-400 transition-colors">
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
                 <Youtube className="h-6 w-6" />
               </a>
             </div>
@@ -87,7 +104,11 @@ const Footer = () => {
 
         <div className="border-t border-dark-700 mt-8 pt-8 flex flex-col md:flex-row items-center justify-between">
           <p className="text-gray-400 text-sm">
+<<<<<<< HEAD
             © 2025 ConcertHub. All rights reserved.
+=======
+            © 2024 ConcertHub. All rights reserved.
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <Link to="/privacy" className="text-gray-400 hover:text-primary-400 text-sm transition-colors">

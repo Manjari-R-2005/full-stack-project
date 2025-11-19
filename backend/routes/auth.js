@@ -2,6 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const { auth } = require('../middleware/auth');
+<<<<<<< HEAD
 const { body, validationResult } = require('express-validator');
 const { sendOTPEmail, sendPasswordResetSuccess } = require('../services/email');
 const { OAuth2Client } = require('google-auth-library');
@@ -184,14 +185,59 @@ router.post('/signup', async (req, res) => {
 
     res.status(201).json({
       message: 'User created successfully. Please login to continue.',
+=======
+
+const router = express.Router();
+
+// Register
+router.post('/register', async (req, res) => {
+  try {
+    const { name, email, password, phone, role } = req.body;
+
+    // Validate input
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: 'Please provide all required fields' });
+    }
+
+    // Check if user exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
+
+    // Create user
+    const user = new User({ 
+      name, 
+      email, 
+      password, 
+      phone,
+      role: role || 'user'
+    });
+    await user.save();
+
+    // Generate token
+    const token = jwt.sign(
+      { userId: user._id },
+      process.env.JWT_SECRET || 'your-secret-key',
+      { expiresIn: '7d' }
+    );
+
+    res.status(201).json({
+      token,
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
       user: {
         id: user._id,
         name: user.name,
         email: user.email,
+<<<<<<< HEAD
+=======
+        phone: user.phone,
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
         role: user.role
       }
     });
   } catch (error) {
+<<<<<<< HEAD
     console.error('Signup error:', error);
     if (error.name === 'ValidationError') {
       const errors = Object.values(error.errors).map(err => err.message);
@@ -204,10 +250,25 @@ router.post('/signup', async (req, res) => {
 // @route   POST /api/auth/login
 // @desc    Login user
 // @access  Public
+=======
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+// Login
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
+<<<<<<< HEAD
+=======
+    // Validate input
+    if (!email || !password) {
+      return res.status(400).json({ message: 'Please provide email and password' });
+    }
+
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
     // Check if user exists
     const user = await User.findOne({ email });
     if (!user) {
@@ -221,19 +282,34 @@ router.post('/login', async (req, res) => {
     }
 
     // Generate token
+<<<<<<< HEAD
     const token = generateToken(user._id);
 
     res.json({
       message: 'Login successful',
+=======
+    const token = jwt.sign(
+      { userId: user._id },
+      process.env.JWT_SECRET || 'your-secret-key',
+      { expiresIn: '7d' }
+    );
+
+    res.json({
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
       token,
       user: {
         id: user._id,
         name: user.name,
         email: user.email,
+<<<<<<< HEAD
+=======
+        phone: user.phone,
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
         role: user.role
       }
     });
   } catch (error) {
+<<<<<<< HEAD
     console.error('Login error:', error);
     res.status(500).json({ message: 'Server error during login' });
   }
@@ -356,4 +432,31 @@ router.post('/logout', auth, (req, res) => {
   res.json({ message: 'Logged out successfully' });
 });
 
+=======
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+// Get current user
+router.get('/me', auth, async (req, res) => {
+  res.json(req.user);
+});
+
+// Update user profile
+router.put('/profile', auth, async (req, res) => {
+  try {
+    const { name, phone } = req.body;
+    const user = await User.findById(req.user._id);
+    
+    if (name) user.name = name;
+    if (phone) user.phone = phone;
+    
+    await user.save();
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
 module.exports = router;

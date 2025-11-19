@@ -1,5 +1,8 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
   "name": "concert-events-system",
   "version": "1.0.0",
   "description": "Music/Concert Event Management System",
@@ -18,6 +21,7 @@
   "keywords": ["music", "concert", "events", "booking", "mern"],
   "author": "",
   "license": "MIT"
+<<<<<<< HEAD
 =======
   "name": "concerthub",
   "private": true,
@@ -42,4 +46,6 @@
     "vite": "^5.4.8"
   }
 >>>>>>> 424a72e4310214fb9ec7ef934ad0594429015dd4
+=======
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
 }

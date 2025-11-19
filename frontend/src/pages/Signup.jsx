@@ -3,7 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { User, Mail, Lock, Eye, EyeOff, UserPlus } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+<<<<<<< HEAD
 import { GoogleLogin } from '@react-oauth/google';
+=======
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -17,7 +20,11 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+<<<<<<< HEAD
   const { signup, googleLogin } = useAuth();
+=======
+  const { signup } = useAuth();
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -205,6 +212,7 @@ const Signup = () => {
               )}
             </motion.button>
 
+<<<<<<< HEAD
             <div className="flex items-center my-4">
               <div className="flex-1 h-px bg-gray-700" />
               <span className="mx-3 text-gray-400 text-sm">OR</span>
@@ -228,6 +236,8 @@ const Signup = () => {
               />
             </div>
 
+=======
+>>>>>>> 7df5785370399dba91a4613466a0805dde142abf
             <div className="text-center">
               <p className="text-gray-400">
                 Already have an account?{' '}
