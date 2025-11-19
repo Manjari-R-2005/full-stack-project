@@ -1,0 +1,20 @@
+{
+  "name": "concert-events-system",
+  "version": "1.0.0",
+  "description": "Music/Concert Event Management System",
+  "main": "server.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd backend && npm run dev",
+    "client": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "start": "cd backend && npm start"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "devDependencies": {},
+  "keywords": ["music", "concert", "events", "booking", "mern"],
+  "author": "",
+  "license": "MIT"
+}
